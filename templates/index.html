@@ -14,7 +14,8 @@
         <ul class="user-list">
             {% for u in usuarios %}
                 <li class="user-item">
-                    <span>{{ u.nome }} — {{ u.email }}</span>
+                    <span>Nome: {{ u.nome }}  <br>
+                        Email: {{ u.email }}</span>
                     <div class="actions">
                         <a class="btn edit" href="{{ url_for('edit', id=u.id) }}">Editar</a>
                         <a class="btn delete" href="{{ url_for('delete', id=u.id) }}">Excluir</a>
@@ -22,7 +23,15 @@
                 </li>
             {% endfor %}
         </ul>
+        <a class="zap" class="btn whatsapp"
+   href="https://wa.me/5581992445474?text=Olá,%20quero%20saber%20mais!"
+   target="_blank"
+   rel="noopener noreferrer">
+   Fale conosco no WhatsApp
+</a>
     </div>
+
+
 </body>
 
 </body>

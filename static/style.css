@@ -85,6 +85,8 @@ h1 {
     font-size: 1rem;
     color: #555;
     font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: left;
 }
 
 /* Ações dos botões */
@@ -97,7 +99,7 @@ h1 {
 .btn {
     padding: 8px 16px;
     border-radius: 25px;
-    color: white;
+    
     font-weight: 600;
     text-decoration: none;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -122,4 +124,8 @@ h1 {
 
 .btn.delete:hover {
     background-color: #bf3e30;
+}
+.zap{
+color: green;
+
 }
