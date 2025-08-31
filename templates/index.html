@@ -15,11 +15,13 @@
             {% for u in usuarios %}
                 <li class="user-item">
                     <span>Nome: {{ u.nome }}  <br>
-                        Email: {{ u.email }}</span>
-                    <div class="actions">
+                        Email: {{ u.email }}
+                     <div class="actions">
                         <a class="btn edit" href="{{ url_for('edit', id=u.id) }}">Editar</a>
                         <a class="btn delete" href="{{ url_for('delete', id=u.id) }}">Excluir</a>
                     </div>
+                    </span>
+                    
                 </li>
             {% endfor %}
         </ul>
@@ -29,6 +31,7 @@
    rel="noopener noreferrer">
    Fale conosco no WhatsApp
 </a>
+
     </div>
 
 

@@ -96,6 +96,7 @@ h1 {
     gap: 10px;  /* Espaço entre os botões */
     flex-wrap: wrap; /* Permite que os botões se movam para uma nova linha, se necessário */
     margin-top: 10px;  /* Espaçamento superior para separar do conteúdo acima */
+    text-align: right;
 }
 
 
