@@ -4,19 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>nomes cadastrados</h1>
-    <a href="{{ url_for('add') }}">Adicionar Usuário</a>
-    <ul>
-        {% for u in usuarios %}
-            <li>
-                {{ u.nome }} - {{ u.email }} <!--estoui acessesando o usario e emailo da rota -->
-                <a href="{{ url_for('edit', id=u.id) }}">Editar</a>
-                <a href="{{ url_for('delete', id=u.id) }}">Excluir</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Usuários Cadastrados</h1>
+        <a class="btn" href="{{ url_for('add') }}"> Adicionar Usuário</a>
+
+        <ul class="user-list">
+            {% for u in usuarios %}
+                <li class="user-item">
+                    <span>{{ u.nome }} — {{ u.email }}</span>
+                    <div class="actions">
+                        <a class="btn edit" href="{{ url_for('edit', id=u.id) }}">Editar</a>
+                        <a class="btn delete" href="{{ url_for('delete', id=u.id) }}">Excluir</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
 
 </body>
 </html>

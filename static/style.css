@@ -1,0 +1,125 @@
+/* Reset básico e corpo da página */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+
+    /* Flexbox para centralizar conteúdo vertical e horizontalmente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container principal */
+.container {
+    background: white;
+    width: 90%;
+    max-width: 600px;
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+/* Título */
+h1 {
+    margin-bottom: 30px;
+    font-weight: 700;
+    color: #4b4b4b;
+}
+
+/* Botão para adicionar usuário */
+.btn.add {
+    display: inline-block;
+    background-color: #6c63ff;
+    color: white;
+    font-weight: 600;
+    padding: 12px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn.add:hover {
+    background-color: #5848c2;
+    box-shadow: 0 8px 25px rgba(88, 72, 194, 0.6);
+}
+
+/* Lista de usuários */
+.user-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Cada usuário */
+.user-item {
+    background: #f9f9fb;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.15s ease;
+}
+
+.user-item:hover {
+    transform: translateY(-3px);
+}
+
+/* Nome e email */
+.user-item span {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 600;
+}
+
+/* Ações dos botões */
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Botões Editar e Excluir */
+.btn {
+    padding: 8px 16px;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* Botão Editar */
+.btn.edit {
+    background-color: #3498db;
+}
+
+.btn.edit:hover {
+    background-color: #217dbb;
+}
+
+/* Botão Excluir */
+.btn.delete {
+    background-color: #e74c3c;
+}
+
+.btn.delete:hover {
+    background-color: #bf3e30;
+}
