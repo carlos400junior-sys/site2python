@@ -1,33 +1,30 @@
 from flask import Flask, render_template, request, redirect, url_for
-import mysql.connector
+import sqlite3
+import os
 
 app = Flask(__name__)
+DATABASE = "usuarios.db"
 
-# ---------- CONEXÃO COM O BANCO DE DADOS (MySQL) ----------
+
+# ---------- CONEXÃO COM O BANCO DE DADOS ----------
 def get_db_connection():
-    conn = mysql.connector.connect(
-        host="localhost",       # host correto
-        port=3306,              # porta padrão do MySQL no XAMPP
-        user="root",            # padrão do XAMPP
-        password="",            # padrão do XAMPP (sem senha)
-        database="meubanco2"    # seu banco de dados
-    )
+    conn = sqlite3.connect(DATABASE)
+    conn.row_factory = sqlite3.Row  # Retorna dicionário em vez de tupla
     return conn
 
 
 # ---------- CRIAR TABELA (executar uma vez) ----------
-with get_db_connection() as conn:
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS usuarios (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nome VARCHAR(100) NOT NULL,
-            email VARCHAR(100) NOT NULL
-        )
-    ''')
-    conn.commit()
-    cursor.close()
-
+def init_db():
+    if not os.path.exists(DATABASE):
+        with get_db_connection() as conn:
+            conn.execute('''
+                CREATE TABLE usuarios (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    nome TEXT NOT NULL,
+                    email TEXT NOT NULL
+                )
+            ''')
+            conn.commit()
 
 # ---------- ROTAS CRUD ----------
 
@@ -35,10 +32,7 @@ with get_db_connection() as conn:
 @app.route("/")
 def index():
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("SELECT * FROM usuarios")
-    usuarios = cursor.fetchall()
-    cursor.close()
+    usuarios = conn.execute("SELECT * FROM usuarios").fetchall()
     conn.close()
     return render_template("index.html", usuarios=usuarios)
 
@@ -51,10 +45,8 @@ def add():
         email = request.form["email"]
 
         conn = get_db_connection()
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO usuarios (nome, email) VALUES (%s, %s)", (nome, email))
+        conn.execute("INSERT INTO usuarios (nome, email) VALUES (?, ?)", (nome, email))
         conn.commit()
-        cursor.close()
         conn.close()
 
         return redirect(url_for("index"))
@@ -66,20 +58,16 @@ def add():
 @app.route("/edit/<int:id>", methods=("GET", "POST"))
 def edit(id):
     conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
 
     if request.method == "POST":
         nome = request.form["nome"]
         email = request.form["email"]
-        cursor.execute("UPDATE usuarios SET nome=%s, email=%s WHERE id=%s", (nome, email, id))
+        conn.execute("UPDATE usuarios SET nome=?, email=? WHERE id=?", (nome, email, id))
         conn.commit()
-        cursor.close()
         conn.close()
         return redirect(url_for("index"))
 
-    cursor.execute("SELECT * FROM usuarios WHERE id = %s", (id,))
-    usuario = cursor.fetchone()
-    cursor.close()
+    usuario = conn.execute("SELECT * FROM usuarios WHERE id = ?", (id,)).fetchone()
     conn.close()
     return render_template("edit.html", usuario=usuario)
 
@@ -88,15 +76,13 @@ def edit(id):
 @app.route("/delete/<int:id>")
 def delete(id):
     conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("DELETE FROM usuarios WHERE id=%s", (id,))
+    conn.execute("DELETE FROM usuarios WHERE id=?", (id,))
     conn.commit()
-    cursor.close()
     conn.close()
     return redirect(url_for("index"))
 
 
 # ---------- INICIAR APP ----------
 if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
-
